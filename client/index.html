@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Vontobel AIRA</title>
+    <meta name="description" content="A research assistant powered by GPT">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/site/styles.css"/>
+    <link rel="stylesheet" href="/site/dbf9fb4d68ce7ce1.css"/>
+    <script src="/site/scripts.js"></script>
+</head>
+
+<body>
+   <div class="w_100% items_center">
+        <div class="pos_relative max-w_1216px mx_auto px_6 md:px_8 w_full box_border-box d_flex">
+           <div style="--logo-width:calc(var(--column-width) * 1.5 + var(--layout-gutter));width:var(--logo-width);max-width:min(140px, var(--logo-width));min-width:90px" class="py_6">
+              <svg viewBox="0 0 140 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="silver.900" width="100%">
+                 <path d="M104.627 19.505a4.407 4.407 0 0 1-3.19-1.393 4.402 4.402 0 0 1-1.181-3.273 4.403 4.403 0 0 1 4.371-4.667 4.48 4.48 0 0 1 4.511 4.667 4.48 4.48 0 0 1-4.511 4.666Zm.84-13.626a6.227 6.227 0 0 0-4.978 2.225V0h-4.558v23.331h4.48V21.45a6.214 6.214 0 0 0 5.087 2.318c4.666 0 8.229-3.842 8.229-8.944s-3.547-8.944-8.245-8.944M72.24 10.406h-5.118v6.221c0 2.131 1.12 2.893 2.551 2.893a6.658 6.658 0 0 0 3.19-1.104l1.68 3.578a9.489 9.489 0 0 1-5.632 1.788c-4.744 0-6.362-2.986-6.362-7.388V1.291h4.573v5.04h5.118v4.075ZM140 23.33h-4.573V0H140v23.331Zm-19.6-10.094h7.529a3.78 3.78 0 0 0-7.529 0Zm12.118 1.555c0 .52-.031 1.04-.094 1.555h-12.04a4.11 4.11 0 0 0 4.372 3.531 6.862 6.862 0 0 0 4.293-1.555l2.691 2.94a10.314 10.314 0 0 1-7.296 2.504 8.396 8.396 0 0 1-8.296-5.428 8.407 8.407 0 0 1-.524-3.47c0-5.35 3.5-8.99 8.587-8.99s8.245 3.625 8.26 8.928m-52.795 0a4.526 4.526 0 1 0 9.037 0 4.524 4.524 0 0 0-4.519-4.79 4.527 4.527 0 0 0-4.518 4.79Zm13.72 0a9.192 9.192 0 0 1-15.694 6.5 9.192 9.192 0 1 1 13-13 9.192 9.192 0 0 1 2.694 6.5Zm-34.58-2.364v10.888h-4.574V14c0-2.458-1.229-3.811-3.313-3.811a3.486 3.486 0 0 0-3.593 3.81v9.333h-4.59v-17h4.45v2.006a5.693 5.693 0 0 1 4.993-2.458 6.331 6.331 0 0 1 6.627 6.564Zm-32.247 2.38a4.524 4.524 0 0 0 4.519 4.791 4.528 4.528 0 0 0 4.519-4.79 4.528 4.528 0 1 0-9.038 0Zm13.72 0a8.833 8.833 0 0 1-9.178 8.944 8.82 8.82 0 0 1-9.178-8.944 8.817 8.817 0 0 1 9.178-8.944 8.836 8.836 0 0 1 9.178 8.944Zm-25.402 8.508H8.773L0 0h5.242l6.627 18.447L18.542 0h5.118l-8.773 23.331Z" fill="currentColor"></path>
+              </svg>
+           </div>
+           <div class="d_flex items_center justify_flex-end gap_4 flex_row flex_3">
+              <div class="d_flex items_center gap_2 flex_row show_sm">
+                 <button data-scope="button" data-part="root" class="button button--theme_light button--color_primary button--variant_primaryLight button--size_small d_flex flex_row items_center" style="--button-min-width:120px">
+                    <span data-scope="button" data-part="icon" class="mr_12px">
+                       <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" color="white" aria-hidden="true" focusable="false">
+                          <path d="m13.5 10.606-1.782-1.783a.756.756 0 0 0-.538-.224.751.751 0 0 0-.539.224l-.744.744a.385.385 0 0 1-.508.028 22.12 22.12 0 0 1-1.577-1.41 22.125 22.125 0 0 1-1.41-1.577.381.381 0 0 1 .031-.508l.744-.744a.762.762 0 0 0 0-1.077L5.394 2.497a.756.756 0 0 0-.538-.224.751.751 0 0 0-.539.224L3.004 3.81c-.726.726-.937 1.757-.51 2.473a21.587 21.587 0 0 0 3.147 4.076 21.687 21.687 0 0 0 4.076 3.147c.246.147.533.218.83.218.564 0 1.168-.254 1.643-.729l1.314-1.313a.762.762 0 0 0 0-1.076H13.5Zm-1.85 1.851c-.318.318-.732.508-1.105.508a.849.849 0 0 1-.44-.112 20.805 20.805 0 0 1-3.926-3.03 20.888 20.888 0 0 1-3.03-3.926c-.244-.411-.073-1.074.396-1.544L4.858 3.04l1.783 1.783-.744.744a1.139 1.139 0 0 0-.084 1.526c.445.551.935 1.1 1.458 1.63l.005.006.005.005c.531.523 1.082 1.013 1.63 1.458.201.162.455.251.717.251.307 0 .594-.12.81-.335l.744-.744 1.783 1.783-1.313 1.313-.002-.003Z" fill="currentColor"></path>
+                       </svg>
+                    </span>
+                    <div data-scope="button" data-part="label" class="d_flex items_center min-h_24px">Contact us</div>
+                 </button>
+                 <button data-scope="button" data-part="root" class="button button--theme_light button--color_primary button--variant_secondary button--size_small d_flex flex_row items_center" style="--button-min-width:120px">
+                    <span data-scope="button" data-part="icon" class="mr_12px">
+                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16px" height="16px" color="silver.900" aria-hidden="true" focusable="false">
+                          <g clip-path="url(#a)">
+                             <path fill="transparent" d="M9.27 8.38v-.766H5.333v-4.82h7.873v10.412H5.333V8.381H9.27Z"></path>
+                             <path fill="currentColor" d="m8.731 7.459-.005.005-1.79-1.79-.539.538L7.8 7.614H2.042v.767h5.767L6.402 9.788l.539.538L9.27 7.997 8.73 7.46Z"></path>
+                             <path fill="currentColor" d="M5.333 10.92v2.286h7.873V2.794H5.333v2.285h-.762V2.032h9.397v11.936H4.571v-3.047h.762Z"></path>
+                          </g>
+                          <defs>
+                             <clippath id="a">
+                                <path fill="currentColor" d="M0 0h16v16H0z"></path>
+                             </clippath>
+                          </defs>
+                       </svg>
+                    </span>
+                    <div data-scope="button" data-part="label" class="d_flex items_center min-h_24px">Login</div>
+                 </button>
+              </div>
+              <div class="d_flex items_center gap_2 flex_row">
+                 <div class="d_flex items_center pos_relative show_sm">
+                    <button data-scope="button" data-part="root" class="border_0 rounded-r_48px border-r_0 button button--theme_light button--color_primary button--variant_unstyled button--size_small d_flex flex_row items_center icon-button" style="--button-min-width:unset">
+                       <span data-scope="button" data-part="icon" class="mr_0">
+                          <svg width="32px" height="32px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" color="silver.900" aria-hidden="true" focusable="false">
+                             <path d="M13.6686 20.1041C17.2677 20.1041 20.1854 17.1865 20.1854 13.5873C20.1854 9.98818 17.2677 7.0705 13.6686 7.0705C10.0694 7.0705 7.15173 9.98818 7.15173 13.5873C7.15173 17.1865 10.0694 20.1041 13.6686 20.1041Z" fill="transparent"></path>
+                             <path d="M26.1486 25.2038L19.7638 18.8191C20.9727 17.4121 21.7092 15.5886 21.7092 13.5924C21.7092 9.15811 18.1028 5.55176 13.6686 5.55176C9.23428 5.55176 5.62793 9.15811 5.62793 13.5924C5.62793 18.0267 9.23428 21.633 13.6686 21.633C15.5581 21.633 17.2952 20.9727 18.6667 19.8806L25.0717 26.2857C25.3714 26.5854 25.854 26.5854 26.1486 26.2857C26.4482 25.986 26.4482 25.5035 26.1486 25.2089V25.2038ZM7.15174 13.5873C7.15174 9.9962 10.0724 7.07049 13.6686 7.07049C17.2648 7.07049 20.1854 9.99112 20.1854 13.5873C20.1854 17.1835 17.2648 20.1041 13.6686 20.1041C10.0724 20.1041 7.15174 17.1835 7.15174 13.5873Z" fill="currentColor"></path>
+                          </svg>
+                       </span>
+                       <div data-scope="button" data-part="label" class="d_flex items_center min-h_24px"></div>
+                    </button>
+                    <div style="width:0px"><input class="rounded-l_20px border-l_transparent focusVisible:ring_0 rounded_20px p_9px_10px w_100% border_1px_solid_#373A36" type="text" placeholder="Search..." style="display:none"></div>
+                 </div>
+                 <button class="show_sm select select--variant_unstyled select--size_xs w_max-content d_flex gap_2" id="select::R2kda::trigger" type="button" aria-controls="select::R2kda::content" aria-expanded="false" data-state="closed" aria-haspopup="listbox" aria-labelledby="select::R2kda::label" data-scope="select" data-part="trigger">
+                    <span>EN</span>
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s;transform-origin:center" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                       <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                 </button>
+                 <button data-scope="button" data-part="root" class="button button--theme_light button--color_primary button--variant_unstyled button--size_small d_flex flex_row items_center icon-button" style="--button-min-width:unset">
+                    <span data-scope="button" data-part="icon" class="mr_0">
+                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" width="32px" height="32px" color="silver.900" aria-hidden="true" focusable="false">
+                          <rect width="24" height="2" x="4" y="9" fill="#000" rx="1"></rect>
+                          <rect width="24" height="2" x="4" y="15" fill="#000" rx="1"></rect>
+                          <rect width="24" height="2" x="4" y="21" fill="#000" rx="1"></rect>
+                       </svg>
+                    </span>
+                    <div data-scope="button" data-part="label" class="d_flex items_center min-h_24px"></div>
+                 </button>
+              </div>
+           </div>
+        </div>
+   </div>
+
+   <div id="story--components-shared-hero-hero--image-hero-story--primary" class="sb-story sb-unstyled" data-story-block="true">
+      <div id="story--components-shared-hero-hero--image-hero-story--primary-inner" data-name="Image Hero Story">
+         <div class="__variable_font-4d8684 __variable_font-c97cff">
+            <div class="d_grid grid-cols_1fr grid-rows_auto_auto text_graphite lg:text_graphite bg_white py_0">
+               <div class="min-h_160px md:min-h_220px lg:min-h_260px xl:min-h_320px pos_relative col-span_1_/_-1 grid-row-start_1 after:pos_absolute after:top_0 after:left_0 after:w_80% after:h_100% after:lg:content_&quot;&quot; after:bg-gradient_image.light"><img src="/site/investment-outlook-2023-wave2-main-desktop-hero-1920x700px.jpg" fetchpriority="high" class="object_cover w_100% h_100% pos_absolute">;</div>
+               <div class="d_flex gap_6 h_100% hyphens_auto 0:w_1 1:w_0 2:w_0 3:w_% lg:w_715px xl:w_904px z_10 px_6 md:px_8 xl:px_28 py_8 lg:py_8 lg:justify_center flex_column col-span_1_/_-1 grid-row-start_2 lg:grid-row-start_1">
+                  <div class="d_flex flex_column gap_4">
+                     <!-- <p class="text_inherit text_left fs_0.75rem leading_130% font_sans font_semibold">Vontobel</p> -->
+                     <h2 class="font_bold text_inherit fs_2rem md:fs_2.5rem xl:fs_3rem tracking_-1% leading_120% font_var(--font-vontobel-serif)"> Vontobel AIRA </h2>
+                     <p class="text_inherit text_left fs_1rem leading_150% font_sans">Say goodbye to manual web searches</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="d_flex flex_column items_center">
+      <div class="w_full">
+         <div class="pos_relative max-w_1216px mx_auto px_0 p_0_24px md:p_0_32px lg:p_0_112px box_content-box">
+            <div class="d_flex flex_row gap_0 flex-wrap_wrap w_100% max-w_1216px py_34px md:py_40px lg:py_72px">
+               <div class="basis_100% grow_0 shrink_0">
+                  <div class="flex_row gap_0 flex-wrap_wrap w_100% max-w_1216px basis_100% grow_0 shrink_0">
+                     <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Instructions</p>  
+                     <p class="text_inherit text_left leading_160% font_sans">
+                        Just enter any question or topic and click on "Research"
+                     </p>
+                  </div>
+                  <form method="POST" class="mt_10" onsubmit="GPTResearcher.startResearch(); return false;">
+                     <div class="form-group">
+                           <label for="task" class="font_semibold">Ask the web</label>
+                           <input type="text" id="task" name="task" class="form-control textbox w_100% mb_4 shadow-none" required>
+                     </div>
+                     <button data-scope="button" data-part="root" class="button button--theme_light button--color_primary button--variant_primaryLight button--size_small d_flex flex_row items_center" style="--button-min-width:120px">
+                           <div data-scope="button" data-part="label" class="d_flex items_center min-h_24px">Research</div>
+                        </button>
+                     
+                  </form>
+               
+                  <div class="margin-div mt_10">
+                     <h2 class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Output</h2>
+                     <div id="output" class="textbox"></div>
+                  </div>
+               </div>
+               
+               
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <footer class="d_flex flex_column text_white mt_10">
+      <div class="bg_teal.800 w_full">
+         <div class="d_flex flex_column lg:flex_row justify_center gap_12 lg:gap_2 ml_auto mr_auto max-w_1216px p_8">
+            <div class="d_flex flex_column md:flex_row lg:flex_column flex_1 gap_8">
+               <div class="d_flex flex_column flex_0 md:flex_1 lg:flex_0">
+                  <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Website</p>
+                  <button class="select select--variant_outline select--size_md w_max-content d_flex gap_2" id="select::R9b5a::trigger" type="button" aria-controls="select::R9b5a::content" aria-expanded="false" data-state="closed" aria-haspopup="listbox" aria-labelledby="select::R9b5a::label" data-scope="select" data-part="trigger">
+                     <span>International</span>
+                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s;transform-origin:center" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                     </svg>
+                  </button>
+               </div>
+               <div class="d_flex flex_column items_flex-start md:items_flex-end lg:items_flex-start flex_0 md:flex_1 lg:flex_0">
+                  <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Follow us</p>
+                  <div class="d_flex items_center gap_2 flex_row">
+                     <a class="focus:shadow_shadow.outline link link--font_sans link--size_md" target="_blank" href="https://twitter.com/">
+                        <span class="">
+                           <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="true">
+                              <path d="M4.06348 4.0625V27.9355H27.9365V4.0625H4.06348ZM26.4127 26.4117H5.58729V5.58631H26.4127V26.4117Z" fill="white"></path>
+                              <path d="M14.1207 21.1657C19.2255 21.1657 21.8058 16.9245 21.8058 13.2419V12.8864L23.3652 11.5708H22.0039L22.8115 10.3315C22.2477 10.621 21.6585 10.8546 21.049 11.0324C19.9925 9.91495 18.235 9.86415 17.1175 10.9207C16.3963 11.6013 16.0966 12.607 16.3201 13.5721C14.0852 13.4603 12.0026 12.3988 10.5956 10.6616C10.5956 12.5207 12.0382 14.1562 12.0382 14.1562L10.4077 14.5219L12.5664 16.7924L10.2248 17.2597L12.9068 19.4083C11.8553 19.7486 10.7582 19.9213 9.65088 19.9162C10.9969 20.734 12.5461 21.1708 14.1207 21.1708V21.1657Z" fill="white"></path>
+                           </svg>
+                        </span>
+                     </a>
+                     <a class="focus:shadow_shadow.outline link link--font_sans link--size_md" target="_blank" href="https://linkedin.com/">
+                        <span class="">
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="true">
+                              <path fill="#fff" d="M16.828 18.276a1.617 1.617 0 0 1 1.595-1.641h.142A1.65 1.65 0 0 1 20.1 18.27v5.09h3.271v-5.09c0-2.885-1.453-4.439-3.49-4.439a4.634 4.634 0 0 0-3.052 1v-.929h-3.24v9.458h3.24v-5.09.006ZM12.1 13.912H8.827v9.458h3.271v-9.458ZM10.535 12.637h.111a1.956 1.956 0 0 0 2.002-1.904v-.097a1.95 1.95 0 0 0-1.89-2.001h-.112a1.93 1.93 0 0 0-2.011 1.844v.132a1.964 1.964 0 0 0 1.9 2.026Z"></path>
+                              <path fill="#fff" d="M4.069 4.053v23.883h23.867V4.053H4.07Zm22.344 22.36H5.593V5.577h20.82v20.836Z"></path>
+                           </svg>
+                        </span>
+                     </a>
+                     <a class="focus:shadow_shadow.outline link link--font_sans link--size_md" target="_blank" href="https://facebook.com/">
+                        <span class="">
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="true">
+                              <path fill="#fff" d="M4.053 4.11v23.893h23.894V4.109H4.053Zm22.37 22.369H5.577V5.633h20.846V26.48Z"></path>
+                              <path fill="#fff" d="M14.654 23.36h2.687l-.04-6.715h2.24l.334-2.606H17.3v-1.66c0-.752.209-1.265 1.29-1.265h1.377V8.782a18.86 18.86 0 0 0-2.006-.101c-1.986 0-3.348 1.214-3.348 3.438v1.92h-2.25v2.606h2.25l.041 6.715Z"></path>
+                           </svg>
+                        </span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="d_flex flex_column flex_1">
+               <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Quick links</p>
+               <div class="d_flex items_flex-start gap_3 flex_column"><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Vontobel Wealth</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">volt by Vontobel</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">volt by Vontobel 3a</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">derinet</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">deritrade</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Transaction Banking</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">cosmofunding</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">EAMNet</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">EAMNet (Services)</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Onlinereporting (Germany)</a></div>
+            </div>
+            <div class="d_flex flex_column xl:flex_row flex_2 gap_12 xl:gap_2">
+               <div class="d_flex flex_column flex_1">
+                  <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Vontobel</p>
+                  <div class="d_flex items_flex-start gap_3 flex_column"><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Our company</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Investor Relations</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Media</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Responsibility</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Art Vontobel</a></div>
+               </div>
+               <div class="d_flex flex_column flex_1">
+                  <p class="font_bold text_inherit fs_1.25rem md:fs_1.5rem leading_130% tracking_0% mb_4">Contact</p>
+                  <div class="d_flex items_flex-start gap_3 flex_column"><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Contact</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_sm text-decor_none hover:text-decor_underline" href="https://d-www.vontobel.com/en-US/about/landing-test">Addresses and locations</a></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="d_flex items_start gap_5 flex_column w_100% font_var(--font-vontobel-sans),_sans-serif bg_black p_8">
+         <div class="max-w_1216px ml_auto mr_auto">
+            <div class="d_flex flex-wrap_wrap gap-y_2 gap-x_2 pb_5"><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Terms and Conditions of Use</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Privacy Policy</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Cookie Policy</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">GDPR</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Ombudsman</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Patriot Act Certification</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">FinSA</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">MiFID / MiFIR</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">SFDR</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">LEI</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">FATCA</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">AEI</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">FinMIA</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">UK Tax Strategy</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Deposit Insurance Scheme</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Information, IT and cyber security</a><a class="focus:shadow_shadow.outline text_white link link--font_sans link--size_xs text-decor_none hover:text-decor_underline border-r_solid_1px pr_2 lastOfType:border-r_none" target="_blank" href="https://d-www.vontobel.com/en-US/about/landing-test">Imprint</a></div>
+            <p class="text_inherit text_left fs_0.625rem font_semibold leading_160% font_sans">The information and/or documents offered on this website represent marketing material pursuant to Art. 68 of the Swiss FinSA and are provided for information purposes only. On request, further documents such as the basic information sheet or the prospectus are available free of charge whenever you wish. The products, services, information, and/or documents offered on this website may not be accessible to individuals domiciled in certain countries. Please note the applicable sales restrictions of the respective products or services.<br><br>© Vontobel  Holding AG 2023. All rights reserved.</p>
+            <p class="text_inherit text_left fs_0.625rem font_semibold leading_160% font_sans">Fork of GPT Researcher &copy; 2023 | <a target="_blank" href="https://github.com/assafelovic/gpt-researcher">GitHub Page</a></p>
+         </div>
+      </div>
+   </footer>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+.textbox {
+    background-color: #fff;
+    border: 1px solid #E3E3E3;
+    color: #000;
+    transition: all .3s ease-in-out;
+    border-radius: 6px;
+    height: 40px;
+    display: block;
+    outline: none;
+    padding: 0px 10px;
+}
+
+.textbox:focus {
+    border: 1px solid #000;
+}
+
+.response {
+    background-color: #f0ede4;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #373a36;
+    border-radius: 12px;
+    display: block;
+} 
+
+#output {
+    height: 500px;
+    overflow: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    color: #000;
+}
