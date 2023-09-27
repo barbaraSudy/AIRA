@@ -45,8 +45,43 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
 
+import logging
+import sys
+
+log_format_str = "%(levelname)s: %(asctime)s - %(name)s - %(message)s"
+formatter = logging.Formatter(log_format_str)
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(formatter)
+console_handler.setLevel(logging.DEBUG)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format=log_format_str,
+    handlers=[
+        console_handler
+    ],
+)
+
+root_logger = logging.getLogger('')
+root_logger.setLevel(logging.DEBUG)
+root_logger.addHandler(console_handler)
+
+
+
+# logging.getLogger('langchain.retrievers.multi_query').setLevel(logging.DEBUG)
+logger = logging.getLogger(__name__)
+logger.info('TEst1')
+logging.info('Test 2')
+
+#google_search_tool = Tool(
+#    name="Google Search Snippets",
+#    description="Search Google for recent results.",
+#    func=top_google_results,
+#)
 
 if __name__ == "__main__":
+
+    
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

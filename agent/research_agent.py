@@ -2,6 +2,7 @@ import json
 import uuid
 from datetime import datetime
 import os
+import logging
 
 from langchain.tools import Tool
 from langchain.utilities import GoogleSearchAPIWrapper
@@ -16,15 +17,20 @@ CFG = Config()
 search = GoogleSearchAPIWrapper()
 
 # Set up google search
-def top_google_results(query):
-    return search.results(query, CFG.google_results)
+
+
+log = logging.getLogger(__name__)
 
 class ResearchAgent:
+
+
     def __init__(self, question, websocket):
         """ Initializes the research assistant with the given question.
         Args: question (str): The question to research
         Returns: None
         """
+        print('$$$$$$$$$$$ BLAH BLAH1')
+        log.info('$$$$$$$$$$$ BLAH BLAH2')
         self.question = question
         self.search_results = []
         self.urls_to_scrape = []
@@ -35,6 +41,9 @@ class ResearchAgent:
         self.output_path = os.path.join(self.root_dir, "outputs", self.directory_name)
         os.makedirs(self.output_path, exist_ok=True)
         self.websocket = websocket
+        
+        def top_google_results(query):
+            return search.results(query, CFG.google_results)
         self.google_search_tool = Tool(
             name="Google Search Snippets",
             description="Search Google for recent results.",
@@ -48,9 +57,16 @@ class ResearchAgent:
         Returns: str: The research for the given question
         """
         # Ask ChatGPT to create relevant search queries
+        print("Conducting research")
+
         search_queries = await self.create_search_queries()
         for query in search_queries:
-            self.search_results.extend(await self.get_search_results(query))
+            print(f"Query: {query}")
+            results = await self.get_search_results(query)
+            print(f"Results {results}")
+            self.search_results.extend(results)
+
+        
         # Remove duplicate links in case similar queries return same results
         self.remove_duplicate_search_results()
         self.urls_to_scrape = [d["link"] for d in self.search_results if "link" in d]
@@ -78,9 +94,11 @@ class ResearchAgent:
         "{self.question}". You must respond with a list of strings in the following format: ["query 1", "query 2", "query 3", "query 4"]"""
         result = await self.call_agent(prompt)
         await self.websocket.send_json({"type": "logs", "output": f"🔎 I will conduct my research based on the following google searches: {result}."})
+        
         return json.loads(result)
 
     async def get_search_results(self, query):
+        print(f"Retrieving search results from google using query: {query}")
         return self.google_search_tool.run(query)
     
     def remove_duplicate_search_results(self):
@@ -104,7 +122,7 @@ class ResearchAgent:
             "content": action,
         }]
         answer = create_chat_completion(
-            model=CFG.smart_llm_model,
+            model=CFG.fast_llm_model,
             messages=messages,
             stream=stream,
             websocket=websocket,

@@ -24,9 +24,6 @@ from langchain.prompts import PromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
-logging.basicConfig()
-logging.getLogger('langchain.retrievers.multi_query').setLevel(logging.INFO)
-
 def answer_question(directory, question):
     text_loader_kwargs={'autodetect_encoding': True}
     loader = DirectoryLoader(directory, glob="**/*.txt", loader_cls=TextLoader, loader_kwargs=text_loader_kwargs, show_progress=True, use_multithreading=True)
@@ -36,7 +33,7 @@ def answer_question(directory, question):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 10000, chunk_overlap = 100)
     all_splits = text_splitter.split_documents(docs)
 
-    llm = ChatOpenAI(temperature=0.3, model="gpt-4")
+    llm = ChatOpenAI(temperature=0.3, model="gpt-3.5-turbo-0613")
 
     vectorstore = Chroma.from_documents(documents=all_splits, embedding=OpenAIEmbeddings())
 

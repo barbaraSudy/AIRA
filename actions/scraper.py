@@ -14,6 +14,7 @@ import logging
 
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
+
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.remote.remote_connection import LOGGER
 from selenium.webdriver.chrome.service import Service
@@ -25,11 +26,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 import chromedriver_autoinstaller
 from config import Config
 
-LOGGER.setLevel(logging.WARNING)
+# LOGGER.setLevel(logging.WARNING)
 FILE_DIR = Path(__file__).parent.parent
 CFG = Config()
 
-chromedriver_autoinstaller.install() #Installs the latest compat version of chromedriver
+#chromedriver_autoinstaller.install() #Installs the latest compat version of chromedriver
 
 class Scraper:
     def __init__(self):
@@ -46,7 +47,7 @@ class Scraper:
         driver = getattr(self.threadLocal, 'driver', None)
         if driver is None:
             driver = webdriver.Chrome(options=self.chromeOptions)
-            driver.set_page_load_timeout(30)
+            driver.set_page_load_timeout(10)
             setattr(self.threadLocal, 'driver', driver)
             self.drivers.add(driver)
         return driver
