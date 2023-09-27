@@ -3,11 +3,12 @@ import uuid
 from datetime import datetime
 import os
 import logging
+import sys
 
 from langchain.tools import Tool
 from langchain.utilities import GoogleSearchAPIWrapper
 
-from actions.scraper import Scraper
+from actions.scraper import AiraSpider
 from actions.llm_utils import create_chat_completion
 from actions.answer_question import answer_question
 from config import Config
@@ -73,15 +74,19 @@ class ResearchAgent:
         await self.websocket.send_json(
             {"type": "logs", "output": f"🕷️ Now I will try to scrape {len(self.urls_to_scrape)} urls."})
         # Scrape and save results as txt files to output folder
-        scraper = Scraper()
-        scraper.scrape_parallel(self.urls_to_scrape, self.output_path)
+        
+        print("AIRA Spider created")
+        scraper = AiraSpider()
+        scraper.start_urls = self.urls_to_scrape
+        print(f"URLs to scrape: {scraper.start_urls}")
+        scraper.crawl()
+        
         await self.websocket.send_json(
             {"type": "logs", "output": f"✅ I was successful in scraping {len(os.listdir(self.output_path))} sites, now on to summarizing"})
         # Answer the question based on scraped results in output folder
         summary = answer_question(self.output_path, self.question)
         await self.websocket.send_json(
             {"type": "logs", "output": f"📝 Here is my summary:\n {summary}"})
-
         return summary
 
 

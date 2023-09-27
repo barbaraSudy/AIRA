@@ -1,3 +1,4 @@
+from typing import Any, Optional
 import requests
 from urllib.parse import urljoin
 from multiprocessing.pool import ThreadPool
@@ -11,100 +12,72 @@ import os
 from hashlib import sha256
 import logging
 
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.remote.remote_connection import LOGGER
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-import chromedriver_autoinstaller
+from scrapy import cmdline, Spider
 from config import Config
+import uuid
+
+import sys
 
 # LOGGER.setLevel(logging.WARNING)
 FILE_DIR = Path(__file__).parent.parent
 CFG = Config()
 
-#chromedriver_autoinstaller.install() #Installs the latest compat version of chromedriver
+directory_name = uuid.uuid4().hex
+root_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+dir_path = os.path.dirname(f"./outputs/{directory_name}/")
+output_path = os.path.join(root_dir, "outputs", directory_name)
+os.makedirs(output_path, exist_ok=True)
 
-class Scraper:
-    def __init__(self):
-        self.threadLocal = threading.local()
-        self.drivers = set()
-        self.chromeOptions = webdriver.ChromeOptions()
-        self.chromeOptions.add_argument(f"user-agent={CFG.user_agent}")
-        self.chromeOptions.add_argument('--headless')
-        self.chromeOptions.add_argument("--enable-javascript")
-        self.chromeOptions.add_argument("--no-sandbox")
-        self.chromeOptions.add_experimental_option('excludeSwitches', ['enable-logging'])
-
-    def get_driver(self):
-        driver = getattr(self.threadLocal, 'driver', None)
-        if driver is None:
-            driver = webdriver.Chrome(options=self.chromeOptions)
-            driver.set_page_load_timeout(10)
-            setattr(self.threadLocal, 'driver', driver)
-            self.drivers.add(driver)
-        return driver
-
-    def close_all_drivers(self):
-        for driver in self.drivers:
-            driver.quit()
-
-    def scrape_url(self, url, output_dir):
-        """Scrape text from a website using selenium
-
-        Args:
-            url (str): The url of the website to scrape
-
-        Returns:
-            text (str): The text scraped from the website
-        """
-        text = ''
+class AiraSpider(Spider):
+    
+    name = "aira"
+    # the starting url for the spider to crawl
+    start_urls = [] #will get set in research_agent
+    # settings for the spider such as user agent, download delay, 
+    # and number of concurrent requests
+    custom_settings = {
+    'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0;Win64) \
+    AppleWebkit/537.36 (KHTML, like Gecko) \
+    Chrome/89.0.4389.82 Safari/537.36',
+    'DOWNLOAD_DELAY': 1,
+    'CONCURRENT_REQUESTS': 1,
+    'RETRY_TIMES': 3,
+    'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408],
+    'DOWNLOADER_MIDDLEWARES': {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+        }
+    }
+    # parse method that is called when the spider is done crawling
+    def parse(self, response):
+        # get the title of the page
+        title = response.css("title::text").get()
+        # get all the paragraphs from the page
+        text = response.css("p::text").get()
+        print(f"Text of {title}: {text}")
         try:
-            driver = self.get_driver()
-            driver.get(url)
-            WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
-
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            clean_soup = self.remove_unwanted_tags(soup)
-            text = self.extract_main_content(clean_soup)
-
-            lines = (line.strip() for line in text.splitlines())
-            chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-            text = "\n".join(chunk for chunk in chunks if chunk)
-        except TimeoutException:
-            print(f"Timeout error for URL: {url}")
-            driver.quit()
-        except Exception as e:
-            print(f"Error for URL {url}: {e}")
-            driver.quit()
-        finally:
-            try:
-                filename = os.path.join(output_dir, f'{sha256(url.encode()).hexdigest()}.txt')
-                with open(filename, "w", encoding='utf-8') as file:
-                    file.write(f'Scraped text from {url}:\n\n')
-                    file.write(text)
-            except:
-                filename = os.path.join(output_dir, f'{sha256(url.encode()).hexdigest()}.txt')
-                with open(filename, "w", encoding='utf-8') as file:
-                    file.write(f'Could not scrape text from {url}:\n\n')
+            filename = os.path.join(output_path, f'{sha256(url.encode()).hexdigest()}.txt')
+            with open(filename, "w", encoding='utf-8') as file:
+                file.write(f'Scraped text from {title}:\n\n')
+                file.write(text)
+        except:
+            filename = os.path.join(output_path, f'{sha256(url.encode()).hexdigest()}.txt')
+            with open(filename, "w", encoding='utf-8') as file:
+                file.write(f'Could not scrape text from {title}:\n\n')
         return text
 
-    def scrape_parallel(self, urllist, output_dir):
-        # Prepare arguments for starmap
-        args = [(url, output_dir) for url in urllist]
-        scraped_texts = ThreadPool(CFG.concurrent_browsers).starmap(self.scrape_url, args)
-        self.close_all_drivers()
-        return scraped_texts
-        
+
+    def crawl(self):
+        setting = get_project_settings()
+        process = CrawlerProcess(setting)
+        process.start()
+        return
+    
+
     # this code can be refined. 
     def remove_unwanted_tags(self, soup):
         for disclaimer_tag in soup.select('div[class*="Disclaimer__TextContainer"]'):

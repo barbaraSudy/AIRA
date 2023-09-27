@@ -43,8 +43,8 @@ class Config(metaclass=Singleton):
             " (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36",
         )
         self.concurrent_browsers = int(os.getenv("CONCURRENT_BROWSERS", 4))
-
         self.memory_backend = os.getenv("MEMORY_BACKEND", "local")
+        self.output_path = os.getenv("output_path", "/.")
         # Initialize the OpenAI API client
         openai.api_key = self.openai_api_key
 
