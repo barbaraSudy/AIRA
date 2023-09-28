@@ -1,108 +1,69 @@
 import requests
 from urllib.parse import urljoin
-from multiprocessing.pool import ThreadPool
 from bs4 import BeautifulSoup
-from selenium import webdriver
-import threading
 from pathlib import Path
-import queue
-from multiprocessing import Pool
 import os
 from hashlib import sha256
-import logging
+import scrapy
+from scrapy.crawler import CrawlerProcess
 
 
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.remote.remote_connection import LOGGER
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-import chromedriver_autoinstaller
 from config import Config
 
-LOGGER.setLevel(logging.WARNING)
 FILE_DIR = Path(__file__).parent.parent
 CFG = Config()
 
-chromedriver_autoinstaller.install() #Installs the latest compat version of chromedriver
 
-class Scraper:
-    def __init__(self):
-        self.threadLocal = threading.local()
-        self.drivers = set()
-        self.chromeOptions = webdriver.ChromeOptions()
-        self.chromeOptions.add_argument(f"user-agent={CFG.user_agent}")
-        self.chromeOptions.add_argument('--headless')
-        self.chromeOptions.add_argument("--enable-javascript")
-        self.chromeOptions.add_argument("--no-sandbox")
-        self.chromeOptions.add_experimental_option('excludeSwitches', ['enable-logging'])
+class Spider(scrapy.Spider):
+    def __init__(self, urllist, output_dir):
+        self.start_urls = urllist
+        self.output_dir = output_dir
 
-    def get_driver(self):
-        driver = getattr(self.threadLocal, 'driver', None)
-        if driver is None:
-            driver = webdriver.Chrome(options=self.chromeOptions)
-            driver.set_page_load_timeout(30)
-            setattr(self.threadLocal, 'driver', driver)
-            self.drivers.add(driver)
-        return driver
+    name = "AiraSpider"
+    # the starting url for the spider to crawl
 
-    def close_all_drivers(self):
-        for driver in self.drivers:
-            driver.quit()
-
-    def scrape_url(self, url, output_dir):
-        """Scrape text from a website using selenium
-
-        Args:
-            url (str): The url of the website to scrape
-
-        Returns:
-            text (str): The text scraped from the website
-        """
+    # settings for the spider such as user agent, download delay, 
+    # and number of concurrent requests
+    custom_settings = {
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0;Win64) \
+            AppleWebkit/537.36 (KHTML, like Gecko) \
+            Chrome/89.0.4389.82 Safari/537.36',
+        'DOWNLOAD_DELAY': 1,
+        'CONCURRENT_REQUESTS': 100,
+        'RETRY_TIMES': 0,
+        'RETRY_HTTP_CODES': [500, 503, 504, 400, 408],
+        'DOWNLOADER_MIDDLEWARES': {
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+            'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+            'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+        }
+    }
+    
+    # parse method that is called when the spider is done crawling
+    def parse(self, response):
         text = ''
-        try:
-            driver = self.get_driver()
-            driver.get(url)
-            WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
+        soup = BeautifulSoup(response.text, 'html.parser')
+        clean_soup = self.remove_unwanted_tags(soup)
+        text = self.extract_main_content(clean_soup)
 
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            clean_soup = self.remove_unwanted_tags(soup)
-            text = self.extract_main_content(clean_soup)
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = "\n".join(chunk for chunk in chunks if chunk)
+        
+        if len(text) > 200:
+            filename = os.path.join(self.output_dir, f'{sha256(response.url.encode()).hexdigest()}.txt')
+            with open(filename, "w", encoding='utf-8') as file:
+                file.write(f'Scraped text from {response.url}:\n\n')
+                file.write(text)
+        # else:
+        #     filename = os.path.join(self.output_dir, f'{sha256(response.url.encode()).hexdigest()}.txt')
+        #     with open(filename, "w", encoding='utf-8') as file:
+        #         file.write(f'Could not scrape text from {response.url}:\n\n')
+        # yield {
+        #     "text": text
+        # }
+        yield None
 
-            lines = (line.strip() for line in text.splitlines())
-            chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-            text = "\n".join(chunk for chunk in chunks if chunk)
-        except TimeoutException:
-            print(f"Timeout error for URL: {url}")
-            driver.quit()
-        except Exception as e:
-            print(f"Error for URL {url}: {e}")
-            driver.quit()
-        finally:
-            try:
-                filename = os.path.join(output_dir, f'{sha256(url.encode()).hexdigest()}.txt')
-                with open(filename, "w", encoding='utf-8') as file:
-                    file.write(f'Scraped text from {url}:\n\n')
-                    file.write(text)
-            except:
-                filename = os.path.join(output_dir, f'{sha256(url.encode()).hexdigest()}.txt')
-                with open(filename, "w", encoding='utf-8') as file:
-                    file.write(f'Could not scrape text from {url}:\n\n')
-        return text
-
-    def scrape_parallel(self, urllist, output_dir):
-        # Prepare arguments for starmap
-        args = [(url, output_dir) for url in urllist]
-        scraped_texts = ThreadPool(CFG.concurrent_browsers).starmap(self.scrape_url, args)
-        self.close_all_drivers()
-        return scraped_texts
         
     # this code can be refined. 
     def remove_unwanted_tags(self, soup):
@@ -183,3 +144,11 @@ class Scraper:
             if not any(item.lower() in x.lower() for x in unique_extraced_content):
                 unique_extraced_content.append(item)
         return "\n\n".join(extracted_content)
+
+
+class Scraper:
+    def scrape_parallel(self, urllist, output_dir):
+        c = CrawlerProcess()
+        c.crawl(Spider, urllist=urllist, output_dir=output_dir)
+        c.start()
+        return c
