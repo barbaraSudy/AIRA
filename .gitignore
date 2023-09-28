@@ -3,9 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 */archive
-*/outputs
-*/test_output
-.env.template
+archive/
+outputs/
+test_output/
+.env*
+backup*
 
 # C extensions
 *.so

@@ -44,7 +44,6 @@ class Config(metaclass=Singleton):
         )
         self.concurrent_browsers = int(os.getenv("CONCURRENT_BROWSERS", 4))
         self.memory_backend = os.getenv("MEMORY_BACKEND", "local")
-        self.output_path = os.getenv("output_path", "/.")
         # Initialize the OpenAI API client
         openai.api_key = self.openai_api_key
 
