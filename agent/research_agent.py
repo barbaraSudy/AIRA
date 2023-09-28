@@ -8,7 +8,7 @@ import sys
 from langchain.tools import Tool
 from langchain.utilities import GoogleSearchAPIWrapper
 
-from actions.scraper import AiraSpider
+from actions.scraper import Scraper
 from actions.llm_utils import create_chat_completion
 from actions.answer_question import answer_question
 from config import Config
@@ -75,11 +75,9 @@ class ResearchAgent:
             {"type": "logs", "output": f"🕷️ Now I will try to scrape {len(self.urls_to_scrape)} urls."})
         # Scrape and save results as txt files to output folder
         
-        print("AIRA Spider created")
-        scraper = AiraSpider()
-        scraper.start_urls = self.urls_to_scrape
-        print(f"URLs to scrape: {scraper.start_urls}")
-        scraper.crawl()
+        scraper = Scraper()
+        results = scraper.scrape_parallel(self.urls_to_scrape, self.output_path)
+        print(f"URLs to scrape: {self.urls_to_scrape}")
         
         await self.websocket.send_json(
             {"type": "logs", "output": f"✅ I was successful in scraping {len(os.listdir(self.output_path))} sites, now on to summarizing"})

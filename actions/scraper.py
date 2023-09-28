@@ -1,83 +1,70 @@
-from typing import Any, Optional
 import requests
 from urllib.parse import urljoin
-from multiprocessing.pool import ThreadPool
 from bs4 import BeautifulSoup
-from selenium import webdriver
-import threading
 from pathlib import Path
-import queue
-from multiprocessing import Pool
 import os
 from hashlib import sha256
-import logging
-
+import scrapy
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 
-from scrapy import cmdline, Spider
+
 from config import Config
-import uuid
 
-import sys
-
-# LOGGER.setLevel(logging.WARNING)
 FILE_DIR = Path(__file__).parent.parent
 CFG = Config()
 
-directory_name = uuid.uuid4().hex
-root_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
-dir_path = os.path.dirname(f"./outputs/{directory_name}/")
-output_path = os.path.join(root_dir, "outputs", directory_name)
-os.makedirs(output_path, exist_ok=True)
 
-class AiraSpider(Spider):
-    
-    name = "aira"
+class Spider(scrapy.Spider):
+    def __init__(self, urllist, output_dir):
+        self.start_urls = urllist
+        self.output_dir = output_dir
+
+    name = "AiraSpider"
     # the starting url for the spider to crawl
-    start_urls = [] #will get set in research_agent
+
     # settings for the spider such as user agent, download delay, 
     # and number of concurrent requests
     custom_settings = {
-    'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0;Win64) \
-    AppleWebkit/537.36 (KHTML, like Gecko) \
-    Chrome/89.0.4389.82 Safari/537.36',
-    'DOWNLOAD_DELAY': 1,
-    'CONCURRENT_REQUESTS': 1,
-    'RETRY_TIMES': 3,
-    'RETRY_HTTP_CODES': [500, 503, 504, 400, 403, 404, 408],
-    'DOWNLOADER_MIDDLEWARES': {
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0;Win64) \
+            AppleWebkit/537.36 (KHTML, like Gecko) \
+            Chrome/89.0.4389.82 Safari/537.36',
+        'DOWNLOAD_DELAY': 1,
+        'CONCURRENT_REQUESTS': 100,
+        'RETRY_TIMES': 0,
+        'RETRY_HTTP_CODES': [500, 503, 504, 400, 408],
+        'DOWNLOADER_MIDDLEWARES': {
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+            'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+            'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
         }
     }
+    
     # parse method that is called when the spider is done crawling
     def parse(self, response):
-        # get the title of the page
-        title = response.css("title::text").get()
-        # get all the paragraphs from the page
-        text = response.css("p::text").get()
-        print(f"Text of {title}: {text}")
-        try:
-            filename = os.path.join(output_path, f'{sha256(url.encode()).hexdigest()}.txt')
+        text = ''
+        soup = BeautifulSoup(response.text, 'html.parser')
+        clean_soup = self.remove_unwanted_tags(soup)
+        text = self.extract_main_content(clean_soup)
+
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = "\n".join(chunk for chunk in chunks if chunk)
+        
+        if len(text) > 200:
+            filename = os.path.join(self.output_dir, f'{sha256(response.url.encode()).hexdigest()}.txt')
             with open(filename, "w", encoding='utf-8') as file:
-                file.write(f'Scraped text from {title}:\n\n')
+                file.write(f'Scraped text from {response.url}:\n\n')
                 file.write(text)
-        except:
-            filename = os.path.join(output_path, f'{sha256(url.encode()).hexdigest()}.txt')
-            with open(filename, "w", encoding='utf-8') as file:
-                file.write(f'Could not scrape text from {title}:\n\n')
-        return text
+        # else:
+        #     filename = os.path.join(self.output_dir, f'{sha256(response.url.encode()).hexdigest()}.txt')
+        #     with open(filename, "w", encoding='utf-8') as file:
+        #         file.write(f'Could not scrape text from {response.url}:\n\n')
+        # yield {
+        #     "text": text
+        # }
+        yield None
 
-
-    def crawl(self):
-        setting = get_project_settings()
-        process = CrawlerProcess(setting)
-        process.start()
-        return
-    
-
+        
     # this code can be refined. 
     def remove_unwanted_tags(self, soup):
         for disclaimer_tag in soup.select('div[class*="Disclaimer__TextContainer"]'):
@@ -157,3 +144,11 @@ class AiraSpider(Spider):
             if not any(item.lower() in x.lower() for x in unique_extraced_content):
                 unique_extraced_content.append(item)
         return "\n\n".join(extracted_content)
+
+
+class Scraper:
+    def scrape_parallel(self, urllist, output_dir):
+        c = CrawlerProcess()
+        c.crawl(Spider, urllist=urllist, output_dir=output_dir)
+        c.start()
+        return c
